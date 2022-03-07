@@ -116,24 +116,17 @@ function cardsSearch(search) {
         result.push(elem);
         cardRender(result);
         errorTxt.style.display = "none";
-      } else if (result.length == 0) {
+      } else if (result.length == 0 || search =="") {
         errorTxt.style.display = "block";
         cardRender(result);
       }
     });
   }
 }
-
-let timer=setTimeout(()=>{
-input.addEventListener("keyup", () => {
-  cardsSearch(input.value);
-});
-},3000);
-
 let timeoutId=0;
 input.addEventListener("keyup", () => {
   clearTimeout(timeoutId);
   timeoutId = setTimeout(()=>{
     cardsSearch(input.value);
-  }, 2000);
+  }, 0,3);
 });
