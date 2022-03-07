@@ -36,40 +36,44 @@ html {
   height: 10px;
   padding-left: 3px;
 }
-.input{
+.input {
   padding: 10px;
   height: 30px;
   width: 300px;
 }
 
-.Error{
-  color:red;
+.Error {
+  color: red;
   font-size: 16px;
   display: none;
   margin-bottom: 20px;
-
 }
 
-.add-wrapper{
+.add-wrapper {
   display: flex;
   align-items: center;
   padding: 30px 0 10px 0;
-  width: 800px;
-  justify-content: space-around;
+  max-width: 800px;
+  justify-content: space-between;
   margin: 0 auto;
 }
 
-.btn{
+.btn {
   background-color: rgb(123, 208, 73);
   border: none;
-  color:black;
+  color: black;
   height: 30px;
 }
 
-.btn:hover{
+.btn:hover {
   color: rgb(123, 208, 73);
   background-color: black;
 }
+
+.hide {
+  display: none;
+}
+
 /* dekstop menu */
 
 .sub-menu_list > li {
@@ -392,8 +396,11 @@ h1 {
   .logo.active {
     display: none;
   }
+}
+@media (max-width: 900px) {
   .box {
     flex-grow: 1;
     height: 100%;
+    /* flex-shrink:1; */
   }
 }

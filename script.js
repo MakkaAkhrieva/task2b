@@ -1,16 +1,13 @@
-const hamb = document.querySelector("#hamb"),
-      popup = document.querySelector("#popup"),
-      menu = document.querySelector("#menu").cloneNode(1),
-      logo = document.querySelector(".logo"),
-      nav = document.querySelector(".navbar"),
-      body = document.body,
-      parent = document.querySelector(".flex-wrap"),
-      menuParent = document.querySelector(".list-item"),
-      subMenuParent = document.querySelector(".sub-menu_list"),
-      input = document.querySelector("input"),
-      btn = document.querySelector(".btn"),
-      parentElements = document.querySelectorAll(".Error"),
-      errorTxt = document.querySelector(".Error");
+const hamb = document.querySelector("#hamb");
+const popup = document.querySelector("#popup");
+const menu = document.querySelector("#menu").cloneNode(1);
+const logo = document.querySelector(".logo");
+const nav = document.querySelector(".navbar");
+const body = document.body;
+const menuParent = document.querySelector(".list-item");
+const subMenuParent = document.querySelector(".sub-menu_list");
+const input = document.querySelector("input");
+const errorTxt = document.querySelector(".Error");
 
 hamb.addEventListener("click", hambHandler);
 
@@ -42,21 +39,7 @@ function closeOnClick() {
   body.classList.remove("noscroll");
 }
 
-
-
-let cards = [
-  {
-    img: "./image/spring-boot.svg",
-    alt: "spring-boot",
-    name: "Spring Boot",
-    text: "Takes an opinionated view of building Spring applications and gets you up and running as quickly as possible",
-  },
-  {
-    img: "./image/spring-boot.svg",
-    alt: "spring-boot",
-    name: "Spring Boot",
-    text: "Takes an opinionated view of building Spring applications and gets you up and running as quickly as possible",
-  },
+const cards = [
   {
     img: "./image/spring-boot.svg",
     alt: "spring-boot",
@@ -95,61 +78,7 @@ let cards = [
   },
 ];
 
-
-
-function search(search) {
-  const text = "There is no such results";
-
-  let result = cards.filter((val) => {
-    return val.name == search;
-  });
-
-  if (result.length == 0 && input.value != "") {
-    /* const element = document.createElement("div");
-    element.classList.add("Error");
-    element.innerHTML = `
-    ${text}
-    `;
-    errorTxt.replaceWith(element); */
-    errorTxt.style.display='block';
-  } else simpleRender(result);
-}
-setTimeout(() => {
-  input.addEventListener("keyup", () => {
-    search(input.value);
-  });
-}, 3000);
-
-function simpleRender(qwe) {
-
-  errorTxt.style.display='none';
-  
-  qwe.forEach((item) => {
-   
-        
-    const element = document.createElement("div");
-
-    element.innerHTML = `
-    <div class="box ">
-    <div class="box-wrapper">
-    <div class="img-cont">
-      <img src=${item.img} alt=${item.alt}>
-    </div>
-    <div class="flex-text">
-      <h2>
-        ${item.name}
-      </h2>
-      <span>${item.text}</span>
-    </div>
-    </div>
-    `;
-    /* errorTxt.remove(); */
-   
-    /*  errorTxt.replaceWith(element); */
-    parent.append(element);
-  });
-  console.log(qwe);
-}
+let parent = document.querySelector(".flex-wrap");
 
 function cardRender(renderItem) {
   const newParent = document.createElement("div");
@@ -157,27 +86,54 @@ function cardRender(renderItem) {
 
   renderItem.forEach((item) => {
     const element = document.createElement("div");
-
+    element.classList.add("box");
     element.innerHTML = `
-    <div class="box ">
     <div class="box-wrapper">
     <div class="img-cont">
       <img src=${item.img} alt=${item.alt}>
     </div>
     <div class="flex-text">
-      <h2>
+      <h2 class="name">
         ${item.name}
       </h2>
       <span>${item.text}</span>
     </div>
-    </div>
     `;
     newParent.append(element);
   });
+
   parent.replaceWith(newParent);
-  console.log("work cardrender");
+  parent = newParent;
 }
 
-btn.addEventListener("click", () => {
-  cardRender(cards);
+cardRender(cards);
+
+function cardsSearch(search) {
+  let result = [];
+  if (search != "") {
+    cards.forEach((elem) => {
+      if (elem.name.search(search) !== -1 || elem.text.search(search) !== -1) {
+        result.push(elem);
+        cardRender(result);
+        errorTxt.style.display = "none";
+      } else if (result.length == 0) {
+        errorTxt.style.display = "block";
+        cardRender(result);
+      }
+    });
+  }
+}
+
+let timer=setTimeout(()=>{
+input.addEventListener("keyup", () => {
+  cardsSearch(input.value);
+});
+},3000);
+
+let timeoutId=0;
+input.addEventListener("keyup", () => {
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(()=>{
+    cardsSearch(input.value);
+  }, 2000);
 });
