@@ -121,8 +121,11 @@ function cardsSearch(search) {
         cardRender(result);
       }
     });
+  }else {
+    cardRender(cards);
   }
 }
+
 let timeoutId=0;
 input.addEventListener("keyup", () => {
   clearTimeout(timeoutId);
